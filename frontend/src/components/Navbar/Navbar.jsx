@@ -22,7 +22,7 @@ function Navbar({setshowlogin}) {
                         <Link to='/cart'><img src={basket_icon} alt='basket'/></Link>
                         <div className='dot'></div>
                     </div>
-                    <button onClick={()=>setshowlogin(true)}>Sign in </button>
+                    <button onClick={()=>setshowlogin(true) }>Sign in </button>
                 </div>
             
         </div>
