@@ -1,8 +1,10 @@
 const mongoose = require("mongoose");
+require("dotenv").config();
+const LINK = process.env.LINK;
 
 const connectdb = async()=>{
     try{
-         await mongoose.connect("mongodb+srv://tanmaysawaji:Pune123456789@cluster0.dz2yolk.mongodb.net/hungryhub");
+         await mongoose.connect(LINK);
          console.log("deb is connect");
     }catch{
         console.log("deb is not connect");
