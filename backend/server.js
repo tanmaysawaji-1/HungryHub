@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const {connectdb} = require('./config/db');
 const foodRouter = require('./routes/foodroute');
+const userRouter = require('./routes/userroute');
 
 const app = express();
 const port = 4000;
@@ -15,6 +16,7 @@ connectdb();
 
 app.use("/api/food",foodRouter)
 app.use("/images",express.static('uploads'));
+app.use("/api/user",userRouter);
 
 
 app.get("/",(req, res)=>{
