@@ -3,6 +3,7 @@ const cors = require('cors');
 const {connectdb} = require('./config/db');
 const foodRouter = require('./routes/foodroute');
 const userRouter = require('./routes/userroute');
+require('dotenv').config();
 
 const app = express();
 const port = 4000;
