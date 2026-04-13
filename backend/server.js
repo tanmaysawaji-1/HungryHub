@@ -4,6 +4,7 @@ const {connectdb} = require('./config/db');
 const foodRouter = require('./routes/foodroute');
 const userRouter = require('./routes/userroute');
 const { cartRouter } = require('./routes/cartroute');
+const { orderRouter } = require('./routes/orderRoute');
 require('dotenv').config();
 
 const app = express();
@@ -19,7 +20,8 @@ connectdb();
 app.use("/api/food",foodRouter)
 app.use("/images",express.static('uploads'));
 app.use("/api/user",userRouter);
-ap.use("api/cart",cartRouter);
+app.use("/api/cart",cartRouter);
+app.use("/api/order",orderRouter);
 
 
 app.get("/",(req, res)=>{
