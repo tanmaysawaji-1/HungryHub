@@ -1,4 +1,5 @@
-import React, { useContext,useEffect,useState,useNavigate } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import './PlaceOrder.css';
 import { StoreContext } from '../../context/StoreContext';
 import axios from 'axios';
@@ -40,12 +41,17 @@ function PlaceOrder() {
             amount:getTotalCartAmount()+2,
         }
         let response = await axios.post(url+"/api/order/place",orderData,{headers:{token}});
+        try{
         if(response.data.success){
             const {session_url} = response.data;
             window.location.replace(session_url);
         }
-        else{
-            alert("Error");
+        // else{
+        //     alert("Error");
+        // }
+        }
+        catch(err){
+            console.log(err);
         }
     }
     const navigate = useNavigate();
@@ -81,7 +87,7 @@ function PlaceOrder() {
                     <input required name='country' onChange={onChangeHandler} value={data.country} type="text" placeholder='Country'/>
                 </div>
 
-                <input required name='phone' onChange={onChangeHandler} value={data.phone}  type="text" placeholder='Phone' />
+                <input required name='phone' onChange={onChangeHandler} value={data.phone} type="text" placeholder='Phone' />
             </div>
             <div className='place-order-right'>
                 <div className="cart-total">

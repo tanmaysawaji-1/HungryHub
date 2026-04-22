@@ -30,10 +30,10 @@ const listFood = async (req, res) =>{
 
     try{
         const foods = await foodModel.find({});
-        res.send({sucess:true,data:foods});
+        res.send({success:true,data:foods});
     }catch(error){
         console.log(error);
-        res.json({sucess:false, message:"Error"});
+        res.json({success:false, message:"Error"});
     }
 }
 
@@ -47,7 +47,7 @@ const removeFood = async (req, res)=>{
         res.json({success:true,message:"Food Removed"});
     }catch(err){
         console.log(err);
-        res.json({success:true,message:"Error"});
+        res.json({success:false,message:"Error"});
     }
 }
 

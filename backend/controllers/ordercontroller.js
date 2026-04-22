@@ -1,5 +1,5 @@
 const {orderModel} = require("../models/orderModel");
-const {userModel}  = require("../models/usermodel");
+const userModel  = require("../models/usermodel");
 const Stripe = require("stripe");
 require('dotenv').config();
 const mongoose = require("mongoose");
@@ -43,16 +43,16 @@ const placeOrder = async (req, res) => {
             quantity:1
         })
 
-        const session = await stripe.checkout.session.create({
+        const session = await stripe.checkout.sessions.create({
             line_items:line_items,
             mode:'payment',
             success_url:`${frontend_url}/verify?success=true&orderId=${newOrder._id}`,
-            cancel_url:`${frontend_url}/verify?success=false&orderId=${newOrder._id}`,
+            cancel_url:`${frontend_url}/verify?success=false&orderId=${newOrder._id}`
         })
         res.json({success:true,session_url:session.url});
     }catch(err){
-        console.log(error);
-        res.json({success:false,message:"Error"})
+        console.error(err);
+        res.json({success:false,message:"Error"});
     }
 }
 
@@ -98,7 +98,7 @@ const listOrders = async (req, res) => {
 // api for updating order status
 const updateStatus = async (req, res) => {
     try{
-        await orderModel.findOneAndDelete(req.body.orderId,{status:req.body.status});
+        await orderModel.findByIdAndUpdate(req.body.orderId,{status:req.body.status});
         res.json({success:true,message:"Status Updated"});
     }catch(err){
         console.log(err);

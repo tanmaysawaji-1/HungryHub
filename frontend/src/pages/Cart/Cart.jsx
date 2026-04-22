@@ -22,10 +22,10 @@ function Cart() {
                 </div>
                 <br/>
                 <hr/>
-                {food_list.map((item, index)=>{
-                    if(cartItems[item._id]>0){
-                        return(
-                            <>
+                {food_list
+                    .filter(item => cartItems?.[item._id] > 0)
+                    .map(item => (
+                        <React.Fragment key={item._id}>
                             <div className='cart-items-title cart-items-item'>
                                 <img src={url+"/images/"+item.image}/>
                                 <p>{item.name}</p>
@@ -35,10 +35,8 @@ function Cart() {
                                 <p onClick={()=>renmoveFromCart(item._id)} className='cross'>x</p>
                             </div>
                             <hr/>
-                            </>
-                        )
-                    }
-                })}
+                        </React.Fragment>
+                    ))}
             </div>
             <div className="cart-bottom">
                 <div className="cart-total">

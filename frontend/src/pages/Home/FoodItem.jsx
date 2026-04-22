@@ -5,15 +5,16 @@ import { StoreContext } from '../../context/StoreContext.jsx';
 function FoodItem({id, name ,price, description , image}){
 
     const {cartItems,addToCart,renmoveFromCart,url} = useContext(StoreContext);
+    const cartCount = cartItems?.[id] || 0;
     return (
         <div className='food-item'>
             <div className="food-item-img-container">
                 <img className="food-item-img" src={url+"/images/"+image} alt={name} />
-                {!cartItems[id]
+                {!cartCount
                     ?<img  className='add' onClick={()=>addToCart(id)} src={assets.add_icon_white}/>
                     :<div className="food-item-counter">
                         <img onClick={()=>renmoveFromCart(id)} src={assets.remove_icon_red}/>
-                        <p>{cartItems[id]}</p>
+                        <p>{cartCount}</p>
                         <img onClick={()=>addToCart(id)} src={assets.add_icon_green}/>
                     </div>
                 }
