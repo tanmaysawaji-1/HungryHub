@@ -3,7 +3,7 @@ import './Home.css';
 import Header from './Header';
 import Menu from './Menu';
 import { useState } from 'react';
-import Foodisplay from './Foodisplay/foodisplay';
+import Foodisplay from './Foodisplay/Foodisplay';
 import Appdownload from './Appdownload';
 
 function Home() {
