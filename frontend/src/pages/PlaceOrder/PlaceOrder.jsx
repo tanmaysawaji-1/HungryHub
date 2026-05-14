@@ -27,10 +27,11 @@ function PlaceOrder() {
 
     const placeOrder = async (event) =>{
         event.preventDefault();
+        console.log('Proceed Payment button clicked');
         let orderItems = [];
         food_list.map((item)=>{
             if(cartItems[item._id]>0){
-                let itemInfo = item;
+                let itemInfo = {...item};
                 itemInfo["quantity"] = cartItems[item._id];
                 orderItems.push(itemInfo);
             }
@@ -40,18 +41,20 @@ function PlaceOrder() {
             items:orderItems,
             amount:getTotalCartAmount()+2,
         }
-        let response = await axios.post(url+"/api/order/place",orderData,{headers:{token}});
+        console.log('Order data to send:', orderData);
         try{
-        if(response.data.success){
-            const {session_url} = response.data;
-            window.location.replace(session_url);
-        }
-        // else{
-        //     alert("Error");
-        // }
+            let response = await axios.post(url+"/api/order/place",orderData,{headers:{token}});
+            console.log('Order API response:', response);
+            if(response.data.success){
+                const {session_url} = response.data;
+                window.location.replace(session_url);
+            }else{
+                alert("Payment failed: " + (response.data.message || "Unknown error"));
+            }
         }
         catch(err){
-            console.log(err);
+            console.log('Order API error:', err);
+            alert("Network or server error. Check console for details.");
         }
     }
     const navigate = useNavigate();
