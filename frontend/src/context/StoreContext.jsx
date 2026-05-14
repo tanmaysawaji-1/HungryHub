@@ -5,7 +5,7 @@ import axios from "axios";
 
 const StoreContextProvider  = (props)=>{
     const[cartItems,setcartItems] = useState({});
-    const url = import.meta.env.VITE_BACKEND_URL || 'http://localhost:4000';
+    const url = import.meta.env.VITE_BACKEND_URL || 'https://hungryhub-backend-bgem.onrender.com';
     const [token, setToken] = useState("");
     const [food_list,setFoodList] = useState([]);
 
