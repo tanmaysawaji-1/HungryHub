@@ -51,7 +51,7 @@ function Loginpopup({setshowlogin}) {
                 <div className="login-popup-inputs">
                     {currstate==="Login"?<></>:<input name='name' onChange={onChangeHandler} value={data.name} type='text' placeholder='Your Name' required></input>}
                     <input name='email' onChange={onChangeHandler} value={data.email}  type='email' placeholder='Your Email' required/>
-                    <input name='password' onChange={onChangeHandler} value={data.password} type='passward' placeholder='Enter The Passward'></input>
+                    <input name='password' onChange={onChangeHandler} value={data.password} type='password' placeholder='Enter your Password'></input>
                 </div>
                 <button type='submit'>{currstate==="Signup"?'Create account':'Login'}</button>
                 <div className='login-popup-condition'>

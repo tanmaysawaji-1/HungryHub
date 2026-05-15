@@ -19,9 +19,6 @@ const placeOrder = async (req, res) => {
             amount:req.body.amount,
             address:req.body.address
         })
-        await newOrder.save();
-        await userModel.findByIdAndUpdate(req.body.userId,{cartData:{}});
-
         const line_items = req.body.items.map((item)=>({
             price_data:{
                 currency:"inr",
@@ -49,9 +46,8 @@ const placeOrder = async (req, res) => {
             success_url:`${frontend_url}/verify?success=true&orderId=${newOrder._id}`,
             cancel_url:`${frontend_url}/verify?success=false&orderId=${newOrder._id}`
         })
-        // Save the actual Stripe charge amount to DB for consistency
-        newOrder.amount = line_items.reduce((sum, li) => sum + li.price_data.unit_amount * li.quantity, 0) / 100;
         await newOrder.save();
+        await userModel.findByIdAndUpdate(req.body.userId,{cartData:{}});
         res.json({success:true,session_url:session.url});
     }catch(err){
         console.error("PlaceOrder error:", err);
