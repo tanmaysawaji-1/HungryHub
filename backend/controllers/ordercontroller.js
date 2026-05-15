@@ -28,7 +28,7 @@ const placeOrder = async (req, res) => {
                 product_data:{
                  name:item.name
                 },
-                unit_amount:item.price*100*90
+                unit_amount:item.price*100 // Stripe expects paise for INR
             },
             quantity:item.quantity
         }))
@@ -38,7 +38,7 @@ const placeOrder = async (req, res) => {
                 product_data:{
                     name:"Delivery Charges"
                 },
-                unit_amount:2*100*90
+                unit_amount:2*100 // 2 rupees delivery charge
             },
             quantity:1
         })
@@ -49,6 +49,9 @@ const placeOrder = async (req, res) => {
             success_url:`${frontend_url}/verify?success=true&orderId=${newOrder._id}`,
             cancel_url:`${frontend_url}/verify?success=false&orderId=${newOrder._id}`
         })
+        // Save the actual Stripe charge amount to DB for consistency
+        newOrder.amount = line_items.reduce((sum, li) => sum + li.price_data.unit_amount * li.quantity, 0) / 100;
+        await newOrder.save();
         res.json({success:true,session_url:session.url});
     }catch(err){
         console.error("PlaceOrder error:", err);
