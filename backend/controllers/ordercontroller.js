@@ -9,6 +9,10 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
 
 // placing user order for frontend
 const placeOrder = async (req, res) => {
+    // Validate required fields
+    if (!req.body.userId || !req.body.items || !req.body.amount || !req.body.address) {
+        return res.status(400).json({ success: false, message: 'Missing required fields' });
+    }
 
     const frontend_url = process.env.FRONTEND_URL || "http://localhost:5173";
 
@@ -51,7 +55,7 @@ const placeOrder = async (req, res) => {
         res.json({success:true,session_url:session.url});
     }catch(err){
         console.error("PlaceOrder error:", err);
-        res.json({success:false,message:"Error", error: err?.message || String(err)});
+        res.status(500).json({success:false,message: err?.message || "Unknown error"});
     }
 }
 
