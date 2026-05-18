@@ -14,7 +14,7 @@ const placeOrder = async (req, res) => {
         return res.status(400).json({ success: false, message: 'Missing required fields' });
     }
 
-    const frontend_url = process.env.FRONTEND_URL || "http://localhost:5173";
+    const frontend_url = process.env.FRONTEND_URL;
 
     try{
         const newOrder = new orderModel({
