@@ -10,7 +10,7 @@ function List({url}) {
     try {
         const response = await axios.get(`${url}/api/food/list`);
         console.log(response.data);
-        if(response.data.sucess){
+        if(response.data.success) {   // was "sucess"
             setList(response.data.data);
         }
     } catch (error) {
